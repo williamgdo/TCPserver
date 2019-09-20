@@ -13,6 +13,8 @@ sock.connect((host, port))  # conecta o socket na porta em que o server esta esc
 try:
     opcao = int(input("Digite 1 para enviar um arquivo ou 2 para baixar o ultimo enviado: "))
     if opcao == 1:       # enviar
+        # sock.sendall(bytes(1))      # avisa o servidor que o cliente vai ENVIAR um arquivo
+
         # recebe o nome do arquivo e carrega os bytes para "file_data"
         try:
             file_name = str(input("Digite o nome do arquivo: "))
@@ -24,6 +26,8 @@ try:
         except Exception as ex:
             print(ex)
     elif opcao == 2:     # receber
+        # sock.sendall(bytes(2))      # avisa o servidor que o cliente vai RECEBER um arquivo
+        
         # recebe de 0 a 4096 enquanto o arquivo nao for vazio 
         while True:
             data = sock.recv(4096)  

@@ -21,17 +21,19 @@ while True:
         print('Conexao de ' + str(client_address))
         file_data = bytes(0)
 
-        # recebe de 0 a 4096 enquanto o arquivo nao for vazio 
+        # data = connection.recv(1)   # recebe "opcao" do cliente (enviar ou receber arquivo)
+
+        # if int(data) == 1:      # cliente envia um arquivo
+            # recebe de 0 a 4096 enquanto o arquivo nao for vazio 
+            
         while True: 
             data = connection.recv(4096)    
             if data:
                 file_data += data
                 print('Recebido ' + str(len(data)) +' bytes')
-                # connection.sendall(data)
             else:
                 print('Não há mais dados de ' + str(client_address) + '. Total de bytes recebidos: ' + str(len(file_data)))
                 break    
-    finally:
         # se o arquivo nao for vazio, salva com o nome {ip do cliente, socket#}_file
         if len(file_data) > 0:   
             print('Salvando dados...')
@@ -40,4 +42,10 @@ while True:
             write_file.write(file_data)
             write_file.close() 
 
+        # elif int(data) == 2:    # cliente recebe um arquivo
+        #     connection.sendall(data)
+        # else:
+        #     print('Opcao invalida.')
+
+    finally:
         connection.close() # finaliza a conecxao
